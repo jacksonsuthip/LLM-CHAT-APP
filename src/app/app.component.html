@@ -1,0 +1,28 @@
+<div class="chat-container">
+  <!-- Sidebar Section -->
+  <div class="sidebar">
+    <button (click)="deleteChatHistory()" class="delete-btn">Delete Chat History</button>
+  </div>
+
+  <!-- Chatbox Section -->
+  <div class="chat-box">
+    <div *ngFor="let message of chatHistory" class="chat-message">
+      <div class="avatar">
+        <span>{{ message.role === 'user' ? '👤' : '🤖' }}</span>
+      </div>
+      <div class="message-content">
+        <p>{{ message.content }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Input Section -->
+  <div class="input-container">
+    <input [(ngModel)]="userInput" (keyup.enter)="sendMessage()" placeholder="How can I help?" />
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isProcessing" class="loading">
+    <p>Loading...</p>
+  </div>
+</div>
