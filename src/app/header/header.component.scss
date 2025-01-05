@@ -1,0 +1,31 @@
+header {
+    background-color: #f8f9fa;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .btn {
+    margin-left: 10px;
+}
+
+header .btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+header .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+header .btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+header .btn-danger:hover {
+    background-color: #c82333;
+}
