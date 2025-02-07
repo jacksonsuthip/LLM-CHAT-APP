@@ -18,6 +18,7 @@ export class ChatComponent implements OnInit, OnChanges {
   isProcessing: boolean = false;
   userInput: string = "";
   streamedResponse: string = "";
+  chatType: string = "URL";
 
   constructor(
     private chatService: ChatService,
@@ -51,7 +52,57 @@ export class ChatComponent implements OnInit, OnChanges {
     localStorage.removeItem('chatHistory');
   }
 
+
+
   sendMessage(): void {
+    if(this.chatType === "URL"){
+      this.chatUrl();
+    } else {
+      this.chatSql();
+    }
+  }
+
+  chatSql():void{
+    let assistantResponse = "";
+
+    // Add user's message to chat history
+    const userMessage = { User: this.userInput, Assistant: '', Role: "User" };
+    this.chatHistory.push(userMessage);
+
+    // Prepare the request body for the API call
+    const requestBody = {
+      history: this.chatHistoryLLM,
+      query: this.userInput,
+      model: this.model,
+      temperature: this.temperature
+    };
+
+    this.isProcessing = true;
+    this.userInput = '';
+
+    // Call the ChatService to send the request to the server
+    this.chatService.sendMessageToBotSQL(requestBody).subscribe({
+      next: (response) => {
+        // Add assistant's response to chat history
+        this.chatHistory.push({ User: '', Assistant: response.answer, Role: "Assistant" });
+        this.chatHistoryLLM.push({ User: response.input, Assistant: response.answer })
+
+        // Save the updated chat history to localStorage
+        localStorage.setItem('chatHistory', JSON.stringify(this.chatHistory));
+
+        // Reset the input and stop the loading indicator
+        this.userInput = '';
+        this.isProcessing = false;
+      },
+      error: (error) => {
+        console.error('Error sending message to bot:', error);
+        this.isProcessing = false;
+      }
+    });
+
+  }
+
+  chatUrl():void {
     if (!this.model || !this.userInput) return;
     let assistantResponse = "";
 
@@ -119,8 +170,6 @@ export class ChatComponent implements OnInit, OnChanges {
     //     this.isProcessing = false;
     //   }
     // });
-
   }
-
 
 }

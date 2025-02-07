@@ -28,13 +28,21 @@
                 <select [(ngModel)]="model" class="form-select">
                     <option value="llama3.2:1b">llama3.2:1b</option>
                     <option value="llama3:8b">llama3:8b</option>
+                    <option value="mistral:7b">mistral:7b</option>
+                    <option value="gemma:7b">gemma:7b</option>
                     <option value="phi3:3.8b">phi3:3.8b</option>
-                    <option value="mistral">mistral</option>
+                    <option value="phi4:14b">phi4:14b</option>
                 </select>
             </div>
             <div>
                 <span>Temperature: {{ temperature }}</span>
                 <input type="range" [(ngModel)]="temperature" min="0" max="10" step="1" class="form-range" />
+            </div>
+            <div class="mb-3">
+                <select [(ngModel)]="chatType" class="form-select">
+                    <option value="SQL">SQL</option>
+                    <option value="URL">URL</option>
+                </select>
             </div>
         </div>
     </div>
