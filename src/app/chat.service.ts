@@ -18,6 +18,10 @@ export class ChatService {
     return this.http.post<any>(`${this.apiEndpoint}/chat/query_url`, requestBody);
   }
 
+  sendMessageToBotSQL(requestBody: any): Observable<any> {
+    return this.http.get<any>(`${this.apiEndpoint}/chat-sql/query_sql/${requestBody.query}/${requestBody.model}/${requestBody.temperature}`);
+  }
+
   addUrl(requestBody: any): Observable<any> {
     return this.http.post<any>(`${this.apiEndpoint}/chat/ingest_url`, requestBody);
   }
